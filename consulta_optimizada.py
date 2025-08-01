@@ -7,7 +7,7 @@ class Tree:
         
     def add_user(self, id, name, phone):
         if self.root is None:
-            self.root = No(name)
+            self.root = No(name, None)
         
         return self.root.add_user(id, name, phone)
     
@@ -30,13 +30,28 @@ class Tree:
         
         return False
             
+        
+    def balance(self):
+        list = self.in_order()
+        
+        if list:
+            self.root = No.balance(0, len(list) - 1, list)
+            return True
+        
+        return False
+    
+    def test(self):
+        print(self.root.info)
             
 
 
 class No:
-    def __init__(self, name):
+    def __init__(self, name, users):
         self.info = name
-        self.users = {}
+        if users is not None:
+            self.users = users
+        else:
+            self.users = {}
         self.left = self.right = None
         
     def add_user(self, id, name, phone):
@@ -52,12 +67,12 @@ class No:
         
         if name < self.info:
             if self.left is None:
-                self.left = No(name)
+                self.left = No(name, None)
             
             return self.left.add_user(id, name, phone)
                 
         if self.right is None:
-            self.right = No(name)
+            self.right = No(name, None)
             
         return self.right.add_user(id, name, phone)
     
@@ -91,6 +106,21 @@ class No:
             list.extend(self.right.in_order())
         
         return list
+    
+    @staticmethod
+    def balance(start, end, list):
+        if start > end:
+            return None 
+        
+        mid = int((start + end) / 2)
+        node = list[mid]
+        new_node = No(node.info, node.users)
+        
+        new_node.left = No.balance(start, mid - 1, list)
+        new_node.right = No.balance(mid + 1, end, list)
+        
+        return new_node
+        
         
             
 
@@ -111,6 +141,7 @@ with open('dados_clientes.dbf', 'r') as db:
          tree.add_user(id, name, phone)
          line = db.readline()
 
+tree.balance()
 
 name = input('Name: ')
 tree.find_name(name)
