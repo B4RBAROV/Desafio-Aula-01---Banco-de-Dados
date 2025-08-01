@@ -76,6 +76,7 @@ class No:
 
 tree = Tree()
 
+start = time()
 with open('dados_clientes.dbf', 'r') as db:
     
     line = db.readline().strip()
@@ -89,5 +90,9 @@ with open('dados_clientes.dbf', 'r') as db:
          tree.add_user(id, name, phone)
          line = db.readline()
 
+
 name = input('Name: ')
 tree.find_name(name)
+
+end = time()
+print('Time to Create Tree and Find Name: {:.4f} seg'.format(end - start))
