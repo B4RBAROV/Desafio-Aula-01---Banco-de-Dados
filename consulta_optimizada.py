@@ -22,8 +22,15 @@ class Tree:
             return system_return
         
         return False
+    
+    
+    def in_order(self):
+        if self.root is not None:
+            return self.root.in_order()
+        
+        return False
             
-
+            
 
 
 class No:
@@ -71,6 +78,20 @@ class No:
             return self.right.find_name(name)
         
         return False
+    
+    
+    def in_order(self):
+        list = []
+        if self.left is not None:
+            list.extend(self.left.in_order())
+            
+        list.append(self)
+        
+        if self.right is not None:
+            list.extend(self.right.in_order())
+        
+        return list
+        
             
 
 
