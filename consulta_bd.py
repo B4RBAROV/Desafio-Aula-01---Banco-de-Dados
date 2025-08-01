@@ -1,5 +1,5 @@
 import time
-
+start_total = time.perf_counter()
 bd = open('dados_clientes.dbf', 'r')
 name = input('name: ')
 
@@ -16,4 +16,4 @@ while linha != '':
 fim = time.perf_counter()
 
 tempo = fim - inicio
-print('Tempo de Busca: {:.4f} seg'.format(tempo))
+print('Todo o Processo: {:.4f}seg\nTempo de Busca: {:.4f} seg'.format(fim - start_total, tempo))
